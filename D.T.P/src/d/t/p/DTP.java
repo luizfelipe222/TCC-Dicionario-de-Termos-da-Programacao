@@ -16,11 +16,21 @@ public class DTP {
      */
     public static void main(String[] args) {
         // TODO code application logic here
-        
         Main tela = new Main();
         tela.setVisible(true);
         
-
+        
+        
+        /*
+                DAO db = new DAO();
+            db.banco();
+            try {
+                db.traduzir();
+            } catch (SQLException ex) {
+                Logger.getLogger(Main.class.getName()).log(Level.SEVERE, null, ex);
+            }
+            db.close();
+        */
     }
     
 }

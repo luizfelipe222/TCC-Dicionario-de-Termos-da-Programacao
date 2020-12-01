@@ -26,6 +26,8 @@ public class DAO {
     private Statement CStatement = null;
     private ResultSet result = null;
     private final String dbURL = "jdbc:mysql://localhost:3306/DTP";
+    private String lingua = null;
+    private String pchaves = null;
     private String respostas = null;
     private final String username = "root";
     private final String password = "";
@@ -39,14 +41,12 @@ public class DAO {
                 if (conn != null) {
                     System.out.println("Connected");
                 }
-            } catch (ClassNotFoundException | SQLException ex) {
+            } catch (ClassNotFoundException ex) {
+                Logger.getLogger(DAO.class.getName()).log(Level.SEVERE, null, ex);
+            } catch (SQLException ex) {
                 Logger.getLogger(DAO.class.getName()).log(Level.SEVERE, null, ex);
             }
-
         }
-        
-        
-        
         /**
          * traduzir ele pega as informações da combobox e da textbox e então 
          * procura a resposta que deve ser mostrada no banco de dados
@@ -57,19 +57,17 @@ public class DAO {
          */
         
         public String traduzir(String linguagem, String pchave) throws SQLException{
-        sql = "SELECT sobre, exemplo FROM pag WHERE ling_pert=? AND nome=?";
+        sql = "SELECT resposta FROM lingua WHERE linguagem=? AND pchaves=?";
         PStatement = conn.prepareStatement(sql);
         PStatement.setString(1, linguagem);
         PStatement.setString(2, pchave);
-        result = PStatement.executeQuery();
+        ResultSet result = PStatement.executeQuery();
         while (result.next()){
             respostas = result.getString(1);
-            respostas += result.getString(2);
             return respostas;
         }
         return null;
         }
-
         /**
          * close fecha a comunicação com o banco de dados
          */
@@ -80,7 +78,6 @@ public class DAO {
             Logger.getLogger(Main.class.getName()).log(Level.SEVERE, null, ex);
         }
         }
-
     
     
     
